@@ -1,0 +1,13 @@
+services:
+  postgres-liquibase:
+    build: .
+    container_name: postgres-liquibase
+    ports:
+      - "5436:5432"  # Mapeo del puerto 5432 del contenedor al puerto 5436 del host
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}  # Nombre de usuario de PostgreSQL
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}  # Contraseña de PostgreSQL
+    volumes:
+      - ./liquibase/:/liquibase/  # Volumen para montar los scripts de cambio de Liquibase
+      - ./postgresql/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh # Volumen para restaurar base de datos
+      - ./postgresql/seed.backup:/tmp/seed.backup # Volumen de BD
