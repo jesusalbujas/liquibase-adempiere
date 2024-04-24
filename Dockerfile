@@ -20,7 +20,6 @@ RUN mkdir -p /opt/liquibase && \
 
 # Configurar Liquibase en la variable de entorno PATH
 ENV PATH="/opt/liquibase:${PATH}"
-# Agregar Java al PATH
 
 # Establecer el directorio de trabajo predeterminado
 WORKDIR /liquibase
