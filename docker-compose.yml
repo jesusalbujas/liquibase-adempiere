@@ -1,7 +1,7 @@
 services:
   postgres-liquibase:
     build: .
-    container_name: postgres-liquibase
+    container_name: liquibase-postgres
     ports:
       - "5436:5432"  # Mapeo del puerto 5432 del contenedor al puerto 5436 del host
     environment:
