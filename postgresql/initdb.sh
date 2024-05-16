@@ -5,5 +5,5 @@ then
     createuser -U postgres adempiere -dlrs
     psql -U postgres -tAc "alter user adempiere password 'adempiere';"
     createdb -U adempiere adempiere
-    # pg_restore -U adempiere -v -d adempiere < /tmp/seed.backup
+    pg_restore -U adempiere -v -d adempiere < /tmp/seed.backup
 fi
