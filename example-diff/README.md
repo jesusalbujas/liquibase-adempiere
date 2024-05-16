@@ -45,7 +45,7 @@ INSERT INTO departments (department_name, location) VALUES
 Ahora, en el directorio `/liquibase` dentro del contenedor ejecutamos el siguiente comando para verificar las diferencias entre ambas bases de datos:
 
 ```sh
- liquibase generateChangelog  --url="jdbc:postgresql://localhost/adempiere"   --username=adempiere   --password=adempiere   --referenceUrl="jdbc:postgresql://localhost/seed"   --referenceUsername=adempiere   --referencePassword=adempiere  --changeLogFile=db_changelog.xml
+liquibase generateChangelog  --url="jdbc:postgresql://localhost/adempiere"   --username=adempiere   --password=adempiere   --referenceUrl="jdbc:postgresql://localhost/seed"   --referenceUsername=adempiere   --referencePassword=adempiere  --changeLogFile=db_changelog.xml
 ```
 
 Creara un archivo changelog, con el siguiente nombre `db_changelog.xml`, ahora lo siguiente es aplicar este changelog en la base de datos `seed`
@@ -53,3 +53,33 @@ Creara un archivo changelog, con el siguiente nombre `db_changelog.xml`, ahora l
 ```
 liquibase update
 ```
+
+---
+
+# Prueba con ADempiere
+
+Entrar en el servicio de Liquibase para crear la otra base de datos
+
+```bash
+createdb -U adempiere seed && pg_restore -U adempiere -v -d adempiere < /tmp/seed.backup && pg_restore -U adempiere -v -d seed < /tmp/seed.backup
+```
+
+Hacer una prueba actualizando un socio de negocios
+
+```sql
+UPDATE C_BPartner SET Name='Epale', Name2='todo bien' WHERE C_BPartner_ID=50000
+```
+
+Generar Changelog
+
+```sh
+liquibase generateChangelog  --url="jdbc:postgresql://localhost/adempiere"   --username=adempiere   --password=adempiere   --referenceUrl="jdbc:postgresql://localhost/seed"   --referenceUsername=adempiere   --referencePassword=adempiere  --changeLogFile=db_changelog.xml
+```
+
+Aplicar cambios
+
+```
+liquibase update
+```
+
+Este último genera un error ya que el changelog está trayendo muchos cambios (5000)
