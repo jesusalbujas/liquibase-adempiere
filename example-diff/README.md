@@ -56,7 +56,7 @@ liquibase update
 
 ---
 
-# Prueba con ADempiere
+## Prueba con ADempiere
 
 Entrar en el servicio de Liquibase para crear la otra base de datos
 
@@ -64,22 +64,30 @@ Entrar en el servicio de Liquibase para crear la otra base de datos
 createdb -U adempiere seed && pg_restore -U adempiere -v -d adempiere < /tmp/seed.backup && pg_restore -U adempiere -v -d seed < /tmp/seed.backup
 ```
 
-Hacer una prueba actualizando un socio de negocios
+Hacer una prueba actualizando un socio de negocios en la base de datos `adempiere`
 
 ```sql
-UPDATE C_BPartner SET Name='Epale', Name2='todo bien' WHERE C_BPartner_ID=50000
+UPDATE C_BPartner SET Name='Epale', Name2='todo bien' WHERE C_BPartner_ID=50000;
 ```
 
 Generar Changelog
 
+> [!TIP]
+> Al comando `--changeLogFile` se le especifica en qué formato nos traerá los cambios entre las bases de datos. Es decir, al modificar el tipo de archivo este lo traerá en el formato especificado.
+
+Tipos de Archivos
+
+- .yaml
+- .json
+- .xml
+- .sql
+
 ```sh
-liquibase generateChangelog  --url="jdbc:postgresql://localhost/adempiere"   --username=adempiere   --password=adempiere   --referenceUrl="jdbc:postgresql://localhost/seed"   --referenceUsername=adempiere   --referencePassword=adempiere  --changeLogFile=db_changelog.xml
+liquibase generateChangelog  --url="jdbc:postgresql://localhost/adempiere"   --username=adempiere   --password=adempiere   --referenceUrl="jdbc:postgresql://localhost/seed"   --referenceUsername=adempiere   --referencePassword=adempiere  --changeLogFile=db_changelog.yaml
 ```
 
 Aplicar cambios
 
-```
+```bash
 liquibase update
 ```
-
-Este último genera un error ya que el changelog está trayendo muchos cambios (5000)
