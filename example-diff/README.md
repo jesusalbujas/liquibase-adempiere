@@ -83,7 +83,15 @@ Tipos de Archivos
 - .sql
 
 ```sh
-liquibase generateChangelog  --url="jdbc:postgresql://localhost/adempiere"   --username=adempiere   --password=adempiere   --referenceUrl="jdbc:postgresql://localhost/seed"   --referenceUsername=adempiere   --referencePassword=adempiere  --changeLogFile=db_changelog.yaml
+liquibase generateChangelog \
+  --url="jdbc:postgresql://localhost/adempiere" \
+  --username=adempiere \
+  --password=adempiere \
+  --referenceUrl="jdbc:postgresql://localhost/seed" \
+  --referenceUsername=adempiere \
+  --referencePassword=adempiere \
+  --excludeObjects="T_*,ad_archive,ad_image,ad_session,ad_changelog,ad_pinstance_para,ad_pinstance,ad_pistance_log,ad_migrationdata,ad_migrationstep,ad_issue,ad_wf_process,ad_wf_activity,ad_wf_eventaudit,ad_scheduler,I_*,ad_table,a_asset_acct,a_asset_addition,a_asset_change,a_asset_change_amt,a_asset_class,a_asset, a_asset_delivery,a_asset_disposed,a_asset_group,a_asset_group_acct,a_asset_info_fin,a_asset_info_ins,a_asset_info_lic,a_asset_info_oth,a_asset_info_tax,a_asset_product,a_asset_retirement,a_asset_reval,a_asset_info_tax,c_elementvalue,a_*"\
+  --changeLogFile=db_changelog.xml
 ```
 
 Aplicar cambios
